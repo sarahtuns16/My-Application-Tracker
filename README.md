@@ -7,16 +7,24 @@ The platform allows users to create accounts, record job applications, monitor a
 The project is being developed collaboratively by the backend developers in Group 10, with each developer responsible for a specific module.
 
 ☑️Core Modules
-Module                           Purpose
-Database & Configuration	Manages database connection and models
-User Authentication     	Manages registration, login, and security
-Application Management	  Handles CRUD operations for job applications
-Dashboard Metrics       	Provides application statistics
-Follow-up Reminder      	Sends automated reminders
+
+Module                   |        Purpose
+-------------------------------------------------------------------
+Database & Configuration | Manages database connection and models
+
+User Authentication      | Manages registration, login, and security
+
+Application Management	 | Handles CRUD operations for job applications
+
+Dashboard Metrics        | Provides application statistics
+
+Follow-up Reminder       | Sends automated reminders
 Validation & 
-Error Handling            Ensures API reliability and security
+
+Error Handling           | Ensures API reliability and security
 
 ☑️Team Split 
+
 Group 10 Backend Development Responsibilities
 
 To ensure effective collaboration, the backend development work is divided into modules.
@@ -24,6 +32,7 @@ To ensure effective collaboration, the backend development work is divided into 
 ☑️Developer 1 – Project Setup and Database Configuration
 
 Responsibilities:
+
 	•	Initialize the Node.js project
 	•	Configure the Express server
 	•	Install project dependencies
@@ -36,7 +45,9 @@ Responsibilities:
 ☑️Developer 2 – User Authentication
 
 Responsibilities:
+
 	•	Create the User model
+	
 	•	Implement user registration
 POST /api/auth/register
 
@@ -52,7 +63,9 @@ POST /api/auth/login
 ☑️Developer 3 – Application Management (CRUD)
 
 Responsibilities:
+
 	•	Create the Application model
+	
 	•	Implement endpoints to create applications
 POST /api/applications
 
@@ -72,6 +85,7 @@ DELETE /api/applications/:id
 ☑️Developer 4 – Dashboard Metrics API
 
 Responsibilities:
+
 	•	Query user applications
 GET /api/dashboard/summary
 
@@ -84,6 +98,7 @@ GET /api/dashboard/summary
 ☑️Developer 5 – Follow-up Reminder System
 
 Responsibilities:
+
 	•	Implement scheduled jobs using node-cron
 	•	Run daily background tasks
 	•	Check applications with followUpDate
@@ -94,6 +109,7 @@ Responsibilities:
 ☑️Developer 6 – API Validation and Error Handling
 
 Responsibilities:
+
 	•	Validate incoming request data
 	•	Implement global error handling middleware
 	•	Handle authentication and authorization errors
@@ -118,42 +134,61 @@ The system uses two primary data models: User and Application.
 
 ☑️User Model
 
-Field       	Type	       Description
-id	         Primary Key	 Unique identifier
-name	        String      	User’s full name
-email 	      String    	 Unique email address
-passwordHash	String    	 Hashed password
-createdAt	    Timestamp 	 Account creation time
+Field                  |Type	                  | Description
+------------------------------------------------------------------
+id	                   | Primary Key              | Unique identifier
+
+name	               |  String                  | User’s full name
+
+email 	               |  String                  | Unique email address
+
+passwordHash           |  String                  | Hashed password
+
+createdAt	           |  Timestamp               |	Account creation time
 
 ☑️Application Model
 
-Field       	Type	            Description
-id          	Primary Key	      Unique identifier
-userId      	Foreign Key 	    Linked to User
-companyName 	String      	    Company applied to
-jobTitle    	String      	    Position applied for
-status	      Enum            	Applied, Interviewing, Offered, Rejected
-dateApplied	  Date            	Date application was submitted
-followUpDate	Date (Optional) 	Reminder date
-notes	        Text (Optional)	  Additional notes
-createdAt	    Timestamp       	Record creation time
-updatedAt   	Timestamp	        Last update time
+Field                  | Type	                          | Description
+----------------------------------------------------------------------------
+id                    | Primary Key	                      | Unique identifier
+
+userId                | Foreign Key 	                  | Linked to User
+
+companyName           | String      	                  | Company applied to
+
+jobTitle              | String      	                  | Position applied for
+status	              | Enum            	              | Applied, Interviewing, Offered, Rejected
+dateApplied	          | Date                           	  | Date application was submitted
+followUpDate          | Date (Optional) 	              | Reminder date
+notes	              | Text (Optional)	                  | Additional notes
+
+createdAt	          | Timestamp                         | Record creation time
+updatedAt             | Timestamp	                      | Last update time
 
 ☑️Permission Matrix
 
 For the MVP, the system contains a single primary role: Authenticated User.
 
-Action          	  Guest (Not Logged In)   	Authenticated User
-Register Account	  Allowed                 	Not Applicable
-Login           	  Allowed                 	Allowed
-Create Application	Not Allowed             	Allowed
-View Applications	  Not Allowed	              Allowed
-Update Application	Not Allowed              	Allowed (only their own applications)
-Delete Application	Not Allowed             	Allowed (only their own applications)
+Action                         | Guest (Not Logged In)                  | Authenticated User
+------------------------------------------------------------------------------
+
+Register Account               | Allowed                 	            | Not Applicable
+
+Login           	           | Allowed                 	            | Allowed
+
+Create Application	           | Not Allowed             	            | Allowed
+
+View Applications	           | Not Allowed	                        | Allowed
+
+Update Application         	   | Not Allowed              	            | Allowed (only their own applications)
+
+Delete Application	           | Not Allowed             	            | Allowed (only their own applications)
+
 View Dashboard
-Metrics           	Not Allowed             	Allowed
-Receive Follow-up
-Reminders	          Not Allowed             	Allowed
+Metrics           	           | Not Allowed             	            | Allowed
+
+Receive Follow-up   
+Reminders	                   | Not Allowed             	            | Allowed
 
 ☑️••PROJECT FOLDER STRUCTURE 
 
@@ -201,6 +236,7 @@ myapplication-trackr/
 ☑️Future Enhancements
 
 Planned improvements beyond the MVP include:
+
 	•	Job recommendation system
 	•	Advanced analytics dashboards
 	•	Application success rate tracking
