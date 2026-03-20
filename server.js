@@ -1,9 +1,11 @@
 import express from 'express';
+import mongoose from 'mongoose';
+import 'dotenv/config'; 
+import authRoutes from './routes/authRoutes.js'; 
+import applicationRoutes from './routes/applicationRoutes.js';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
-
 import userRoutes from './routes/userRoutes.js';
-import applicationRoutes from './routes/applicationRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
 
 dotenv.config();
@@ -14,10 +16,12 @@ const app = express();
 
 app.use(express.json());
 
+// Routes
+
 app.get('/', (req, res) => {
     res.send('API is running');
 });
-
+app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/applications', applicationRoutes);
 app.use('/api/dashboard', dashboardRoutes);

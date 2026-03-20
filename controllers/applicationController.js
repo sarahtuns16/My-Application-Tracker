@@ -1,11 +1,11 @@
 import Application from '../models/Application.js';
 
-const createApplication = async (req, res) => {
+export const createApplication = async (req, res) => {
   try {
     const { companyName, jobTitle, status, dateApplied, followUpDate, notes } = req.body;
 
     const application = await Application.create({
-      userId: req.user.id,
+      userId: req.user.userId, // Note: Changed to req.user.userId to match JWT payload
       companyName,
       jobTitle,
       status,
@@ -20,18 +20,18 @@ const createApplication = async (req, res) => {
   }
 };
 
-const getApplications = async (req, res) => {
+export const getApplication = async (req, res) => {
   try {
-    const applications = await Application.find({ userId: req.user.id })
+    const application = await Application.find({ userId: req.user.userId }) // Note: Changed to req.user.userId
       .sort({ createdAt: -1 });
 
-    res.status(200).json(applications);
+    res.status(200).json(application);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-const updateApplication = async (req, res) => {
+export const updateApplication = async (req, res) => {
   try {
     const application = await Application.findById(req.params.id);
 
@@ -39,7 +39,7 @@ const updateApplication = async (req, res) => {
       return res.status(404).json({ message: 'Application not found' });
     }
 
-    if (application.userId.toString() !== req.user.id) {
+    if (application.userId.toString() !== req.user.userId) { // Note: Changed to req.user.userId
       return res.status(403).json({ message: 'Not authorized' });
     }
 
@@ -55,7 +55,7 @@ const updateApplication = async (req, res) => {
   }
 };
 
-const deleteApplication = async (req, res) => {
+export const deleteApplication = async (req, res) => {
   try {
     const application = await Application.findById(req.params.id);
 
@@ -63,7 +63,7 @@ const deleteApplication = async (req, res) => {
       return res.status(404).json({ message: 'Application not found' });
     }
 
-    if (application.userId.toString() !== req.user.id) {
+    if (application.userId.toString() !== req.user.userId) { // Note: Changed to req.user.userId
       return res.status(403).json({ message: 'Not authorized' });
     }
 
@@ -74,5 +74,3 @@ const deleteApplication = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
-export { createApplication, getApplications, updateApplication, deleteApplication };
