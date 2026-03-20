@@ -1,6 +1,6 @@
 🌎Project Overview
 
-MyInternTrackr is a backend system designed to help users organize, track, and manage their job or internship applications in a structured way.
+MyApplicationTrackr is a backend system designed to help users organize, track, and manage their job or internship applications in a structured way.
 
 The platform allows users to create accounts, record job applications, monitor application status, and receive reminders for follow-ups. The goal of this Minimum Viable Product (MVP) is to build a secure and reliable backend API that supports authentication, application tracking, dashboard statistics, and automated reminders.
 
