@@ -30,6 +30,10 @@ const applicationSchema = new mongoose.Schema(
     notes: {
       type: String,
     },
+    reminderSent: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

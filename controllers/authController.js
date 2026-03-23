@@ -2,6 +2,25 @@ import bcrypt from 'bcrypt';
 import generateToken from '../utils/generateToken.js';
 import { OAuth2Client } from 'google-auth-library';
 import User from '../models/User.js';
+import nodemailer from 'nodemailer';
+import { successResponse } from '../utils/response.js';
+
+const sendEmail = async (userEmail, message) => {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  await transporter.sendMail({
+    from: process.env.EMAIL,
+    to: userEmail,
+    subject: "Follow-up Reminder",
+    text: message,
+  });
+};
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -66,7 +85,13 @@ export const loginUser = async (req, res) => {
 
 export const googleLogin = async (req, res) => {
   try {
-    const { token } = req.body; // The Google ID token sent from the frontend
+    successResponse(res, applications, "Applications fetched");
+  } catch (error) {
+
+    res.status(401).json({ message:
+      'Invalid Google token', error:
+      error.message });
+  };
 
     const ticket = await client.verifyIdToken({
       idToken: token,
@@ -98,7 +123,6 @@ export const googleLogin = async (req, res) => {
       user: { id: user._id, fullName: user.fullName, email: user.email }
     });
 
-  } catch (error) {
-    res.status(401).json({ message: 'Invalid Google token', error: error.message });
-  }
-};
+  };
+
+
