@@ -4,9 +4,9 @@ import generateToken from '../utils/generateToken.js';
 
 const router = express.Router();
 
-router.post('api/auth/register', registerUser);
-router.post('api/auth/login', loginUser);
-router.post('api/auth/google-login', googleLogin);
+router.post('/register', registerUser);
+router.post('/login', loginUser);
+router.post('/google-login', googleLogin);
 
 export default router;
 

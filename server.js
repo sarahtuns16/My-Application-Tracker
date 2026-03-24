@@ -23,7 +23,7 @@ app.use(cors());
 
 // test routes
 
-app.get('/', (req, res) => {
+app.get('/test', (req, res) => {
     res.send('API is running');
 });
 app.use('/api/auth', authRoutes);
