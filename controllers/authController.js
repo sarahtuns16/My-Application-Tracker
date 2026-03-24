@@ -4,6 +4,7 @@ import { OAuth2Client } from 'google-auth-library';
 import User from '../models/User.js';
 import nodemailer from 'nodemailer';
 import { successResponse } from '../utils/response.js';
+import jwt from "jsonwebtoken";
 
 const sendEmail = async (userEmail, message) => {
   const transporter = nodemailer.createTransport({
@@ -84,45 +85,48 @@ export const loginUser = async (req, res) => {
 };
 
 export const googleLogin = async (req, res) => {
+  const { token } = req.body; 
+
   try {
-    successResponse(res, applications, "Applications fetched");
-  } catch (error) {
-
-    res.status(401).json({ message:
-      'Invalid Google token', error:
-      error.message });
-  };
-
-    const ticket = await client.verifyIdToken({
+    const ticket = await
+    client.verifyIdToken({
       idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID, 
+      audience: 
+      process.env.GOOGLE_CLIENT_ID,
     });
-    
-    const { email, name, sub: googleId } = ticket.getPayload();
 
-    let user = await User.findOne({ email });
+    const { email, name, sub:
+      googleId } = ticket.getPayload();
 
-    if (user) {
-      if (!user.googleId) {
+      let user = await 
+      User.findOne({ email });
+
+      if (!user) {
+        user = await User.create({
+          fullName: name,
+          email,
+          googleId,
+        });
+      } else if (!user.googleId) {
         user.googleId = googleId;
         await user.save();
       }
-    } else {
-      user = await User.create({
-        fullName: name,
-        email,
-        googleId,
+
+      const appToken =
+      generateToken(user._id);
+
+      return res.status(200).json({
+        message: 'Google login successful',
+        token: appToken,
+        user: { id: user._id, fullName: user.fullName, email: user.email }
       });
+
+    } catch (error) {
+      return res.status(401).json({ message:
+      'Invalid Google token', error:
+      error.message });
     }
-
-    const appToken = generateToken(user._id);
-
-    res.status(200).json({
-      message: 'Google login successful',
-      token: appToken,
-      user: { id: user._id, fullName: user.fullName, email: user.email }
-    });
-
   };
 
 
+    
