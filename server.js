@@ -23,7 +23,7 @@ app.use(cors());
 
 // test routes
 
-app.get('/test', (req, res) => {
+app.get('/', (req, res) => {
     res.send('API is running');
 });
 app.use('/api/auth', authRoutes);
@@ -34,6 +34,6 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
 });

@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import Application from "../models/Application.js";
 
-if(process.env.NODE_ENV !== "test") {
+const runReminderJob = () => {
     cron.schedule ("0 0 * * *", async () => {
         console.log("Running follow-up reminder job...");
 
