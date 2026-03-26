@@ -1,7 +1,7 @@
 import Application from '../models/Application.js';
 
 export const createApplication = async (req, res) => {
-  console.log("USER DATA FROM MIDDLEWARE:", req.user);
+  console.log("Logged in User ID:", req.user);
   try {
     const { companyName, jobTitle, status, dateApplied, followUpDate, notes } = req.body;
 
