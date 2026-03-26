@@ -8,7 +8,7 @@ export const validateApplication = [
   body("jobTitle").notEmpty().withMessage("jobTitle is required"),
   body("status")
     .optional()
-    .isIn(["pending", "accepted", "rejected"])
+    .isIn(["Applied", "Interviewing", "Offered", "Rejected"])
     .withMessage("Invalid status"),
 ];
 
