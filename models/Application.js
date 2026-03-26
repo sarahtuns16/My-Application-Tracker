@@ -9,11 +9,11 @@ const applicationSchema = new mongoose.Schema(
     },
     companyName: {
       type: String,
-      required: [true, 'companyName is required'],
+      required: [true, 'Company name is required'],
     },
     jobTitle: {
       type: String,
-      required: [true, 'jobTitle is required'],
+      required: [true, 'Job title is required'],
     },
     status: {
       type: String,
