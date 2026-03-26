@@ -7,12 +7,12 @@ export const createApplication = async (req, res) => {
 
     const application = await Application.create({
       userId: req.user,
-      companyName: req.body.companyName,
-      jobTitle: req.body.jobTitle,
-      status: req.body.status,
-      dateApplied: req.body.dateApplied,
-      followUpDate: req.body.followUpDate,
-      notes: req.body.notes,
+      companyName,
+      jobTitle,
+      status,
+      dateApplied,
+      followUpDate,
+      notes,
     });
 
     res.status(201).json(application);
@@ -28,9 +28,9 @@ export const getApplication = async (req, res, next) => {
 
     const skip = (page - 1) * limit;
 
-    const total = await Application.countDocuments({ user: req.user.id });
+    const total = await Application.countDocuments({ user: req.user });
 
-    const applications = await Application.find({ user: req.userId }) 
+    const applications = await Application.find({ user: req.user }) 
       .skip(skip)
       .limit(limit)
       .sort({ createdAt: -1 });
@@ -55,7 +55,7 @@ export const updateApplication = async (req, res) => {
       return res.status(404).json({ message: 'Application not found' });
     }
 
-    if (application.userId.toString() !== req.user.userId) { // Note: Changed to req.user.userId
+    if (application.userId.toString() !== req.user) { // Note: Changed to req.user.userId
       return res.status(403).json({ message: 'Not authorized' });
     }
 
