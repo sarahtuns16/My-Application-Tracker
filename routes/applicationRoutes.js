@@ -4,8 +4,8 @@ import { body } from "express-validator";
 import validateRequest from '../middleware/validateMiddleware.js';
 
 export const validateApplication = [
-  body("companyName").notEmpty().withMessage("Company name is required"),
-  body("jobTitle").notEmpty().withMessage("Job title is required"),
+  body("companyName").notEmpty().withMessage("companyName is required"),
+  body("jobTitle").notEmpty().withMessage("jobTitle is required"),
   body("status")
     .optional()
     .isIn(["pending", "accepted", "rejected"])
