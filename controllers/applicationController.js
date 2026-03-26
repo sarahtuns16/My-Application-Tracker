@@ -28,9 +28,9 @@ export const getApplication = async (req, res, next) => {
 
     const skip = (page - 1) * limit;
 
-    const total = await Application.countDocuments({ user: req.user });
+    const total = await Application.countDocuments({ userId: req.user });
 
-    const applications = await Application.find({ user: req.user }) 
+    const applications = await Application.find({ userId: req.user }) 
       .skip(skip)
       .limit(limit)
       .sort({ createdAt: -1 });
@@ -55,7 +55,7 @@ export const updateApplication = async (req, res) => {
       return res.status(404).json({ message: 'Application not found' });
     }
 
-    if (application.userId.toString() !== req.user) { // Note: Changed to req.user.userId
+    if (application.userId.toString() !== req.user) { 
       return res.status(403).json({ message: 'Not authorized' });
     }
 
@@ -80,7 +80,7 @@ export const deleteApplication = async (req, res) => {
       return res.status(404).json({ message: 'Application not found' });
     }
 
-    if (application.userId.toString() !== req.user.userId) { // Note: Changed to req.user.userId
+    if (application.userId.toString() !== req.user) { 
       return res.status(403).json({ message: 'Not authorized' });
     }
 
