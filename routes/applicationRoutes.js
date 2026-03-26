@@ -22,7 +22,7 @@ import {
 const router = express.Router();
 
 router.route('/')
-  .post(protect, validateApplication, validateRequest, createApplication)
+  .post(protect, validateApplication, createApplication)
   .get(protect, getApplication);
 
 router.route('/:id')
