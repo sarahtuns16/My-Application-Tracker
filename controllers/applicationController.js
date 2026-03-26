@@ -1,17 +1,18 @@
 import Application from '../models/Application.js';
 
 export const createApplication = async (req, res) => {
+  console.log("USER DATA FROM MIDDLEWARE:", req.user);
   try {
     const { companyName, jobTitle, status, dateApplied, followUpDate, notes } = req.body;
 
     const application = await Application.create({
-      userId: req.user.userId, // Note: Changed to req.user.userId to match JWT payload
-      companyName,
-      jobTitle,
-      status,
-      dateApplied,
-      followUpDate,
-      notes,
+      userId: req.user,
+      companyName: req.body.companyName,
+      jobTitle: req.body.jobTitle,
+      status: req.body.status,
+      dateApplied: req.body.dateApplied,
+      followUpDate: req.body.followUpDate,
+      notes: req.body.notes,
     });
 
     res.status(201).json(application);
@@ -69,6 +70,7 @@ export const updateApplication = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
 
 export const deleteApplication = async (req, res) => {
   try {
