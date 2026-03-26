@@ -29,6 +29,5 @@ router.route('/:id')
   .put(protect, updateApplication)
   .delete(protect, deleteApplication);
 
-  router.get("/applications", protect, getApplication);
 
 export default router;
